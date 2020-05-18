@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
-const ctable = require('console.table');
+const cTable = require('console.table');
 
 var dbconnection = mysql.createConnection({
     host: 'localhost',
@@ -29,7 +29,21 @@ function promptUser() {
             'Add a Role',
             'QUIT TASK'
         ]
-    }).
+    }).then((data) => {
+        switch (data.choice) {
+            case 'View Employees':
+            viewAllEmployees();
+            break;
+        }
+    })
+}
+
+function viewAllEmployees() {
+    dbconnection.query('SELECT * FROM employee', (err, res) => {
+        if (err) throw err;
+        Console.log(res.length + " employees found!");
+        console.log('All Employees:', res);
+    })
 }
 
 
