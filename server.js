@@ -15,4 +15,22 @@ dbconnection.connect ((err) =>  {
     promptUser();
 });
 
+function promptUser() {
+    inquirer.prompt({
+        type: 'list',
+        message: 'What would you like to do?',
+        name: 'choice',
+        choices: [
+            'View all Employees',
+            'View all Departments',
+            'View all Roles',
+            'Add and Employee',
+            'Add a Department',
+            'Add a Role',
+            'QUIT TASK'
+        ]
+    }).
+}
+
+
 
