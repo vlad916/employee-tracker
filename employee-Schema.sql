@@ -6,7 +6,7 @@ USE employeeDB;
 
 CREATE TABLE department (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    name varchar(30) NOT NULL
+    department varchar(30) NOT NULL
 );
 
 CREATE TABLE roles (
@@ -26,3 +26,7 @@ CREATE TABLE employee (
     manager_id INT,
     CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
+
+SELECT * FROM department;
+SELECT * FROM roles;
+SELECT * FROM employee;
