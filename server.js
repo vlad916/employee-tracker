@@ -47,6 +47,9 @@ function promptUser() {
             case 'Add Department':
                 addDepartment();
                 break;
+            case 'Add a Role':
+                addRole();
+                break;
             case 'QUIT TASK':
                 finish();
                 break;
@@ -153,6 +156,59 @@ function addDepartment() {
             console.table('All Departments:', res);
             promptUser();        
         })
+    })
+}
+
+function addRole() {
+    const query = 'SELECT * FROM department'
+    dbconnection.query(query, (err, res) => {
+        if (err) throw err;
+
+        inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'roleName',
+                    message: 'Enter a title for the new role'
+                },
+                {
+                    type: 'input',
+                    name: 'roleSalary',
+                    message: 'Enter a salary for the new role'
+                },
+                {
+                    type: 'rawlist',
+                    name: 'roleDepartment',
+                    choices: function () {
+                        let arry = [];
+                        for (let i = 0; i < res.length; i++) {
+                            arry.push(res[i].department);
+                        }
+                        return arry;
+                    },
+                }
+            ]).then((data) => {
+                let deptId;
+                for (let j = 0; j < res.length; j++) {
+                    if (res[j].department == data.roleDepartment) {
+                        deptId = res[j].id;
+                    }
+                }
+
+                dbconnection.query(
+                    'INSERT INTO roles SET ?',
+                    {
+                        title: data.roleName,
+                        salary: data.roleSalary,
+                        department_id: deptId
+                    },
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log('A new role has been added to the system...');
+                        promptUser();
+                    }
+                )
+            })
     })
 }
 
