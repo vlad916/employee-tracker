@@ -2,7 +2,7 @@
 
 ## Description 
 
-This is a employee tracker application that allows the user to add and view departments, roles and employees as well as update the role of a certain employee in the database using `node.js`.  
+This is an employee tracker application that allows the user to add and view departments, roles and employees as well as update the role of a certain employee in the database using `node.js`.  
 
 ## Link for the deployed application
 
