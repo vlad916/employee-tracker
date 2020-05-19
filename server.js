@@ -1,8 +1,10 @@
+// dependencies
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const employeeLogo = require('asciiart-logo');
 
+// Creates a connection to sql database
 const dbconnection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -11,11 +13,13 @@ const dbconnection = mysql.createConnection({
     database: 'employeeDB'
 })
 
+// connects to mysql server and sql database
 dbconnection.connect ((err) => {
     if (err) throw err;
     showLogo ();
 })
 
+// shows employee manager logo
 function showLogo() {
     const logo = employeeLogo ({name:'Employee Manager'}).render();
     console.log(logo);
@@ -70,6 +74,7 @@ function promptUser() {
     })
 }
 
+// Views all employees in database
 function viewEmployees() {
     dbconnection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
@@ -79,6 +84,7 @@ function viewEmployees() {
     })
 }
 
+// Views all departments in database
 function viewAllDepartments() {
     dbconnection.query('SELECT * FROM department', (err, res) => {
         if (err) throw err;
@@ -88,6 +94,7 @@ function viewAllDepartments() {
     })
 }
 
+// Views all Roles in database
 function viewAllRoles() {
     dbconnection.query('SELECT * FROM roles', (err, res) => {
         if (err) throw err;
@@ -97,6 +104,7 @@ function viewAllRoles() {
     })
 }
 
+// Creates an employee in the database
 function addEmployee() {
     dbconnection.query('SELECT * FROM roles', (err, res) => {
         if (err) throw err;
@@ -147,7 +155,8 @@ function addEmployee() {
         })
     })
 }
-    
+
+// Creates a new department in database
 function addDepartment() {
     inquirer.prompt([
         {
@@ -170,6 +179,7 @@ function addDepartment() {
     })
 }
 
+// Creates another role in database
 function addRole() {
     const query = 'SELECT * FROM department'
     dbconnection.query(query, (err, res) => {
@@ -223,6 +233,7 @@ function addRole() {
     })
 }
 
+// Updates an existing role in the database
 function updateEmployeeRole() {
     dbconnection.query('SELECT * FROM roles', (err, roles) => {
         dbconnection.query('SELECT * FROM department', (err, departments) => {
@@ -283,6 +294,7 @@ function updateEmployeeRole() {
     })
 }
 
+// Ends the application
 function finish(){
     dbconnection.end();
 }
