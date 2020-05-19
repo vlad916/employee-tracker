@@ -35,6 +35,7 @@ function promptUser() {
                 'Add an Employee',
                 'Add Department',
                 'Add a Role',
+                'Update Employee role',
                 'QUIT TASK'
         ]
     }).then((data) => {
@@ -56,6 +57,9 @@ function promptUser() {
                 break;
             case 'Add a Role':
                 addRole();
+                break;
+            case 'Update Employee role':
+                updateEmployeeRole();
                 break;
             case 'QUIT TASK':
                 finish();
@@ -216,6 +220,66 @@ function addRole() {
                     }
                 )
             })
+    })
+}
+
+function updateEmployeeRole() {
+    dbconnection.query('SELECT * FROM roles', (err, roles) => {
+        dbconnection.query('SELECT * FROM department', (err, departments) => {
+            if (err) throw err;
+
+            inquirer.prompt([
+                {
+                    name: "updatedRole",
+                    type: "rawlist",
+                    choices: function () {
+                        var array = [];
+                        for (var i = 0; i < roles.length; i++) {
+                            array.push(roles[i].title);
+                        }
+
+                        return array;
+                    },
+                    message: "Choose a role that you want to update"
+                },
+                {
+                    name: "updatedSalary",
+                    type: "input",
+                    message: "Enter a salary for the new role"
+
+                },
+                {
+                    name: "choice",
+                    type: "rawlist",
+                    choices: function () {
+                        var array = [];
+                        for (var i = 0; i < departments.length; i++) {
+                            array.push(departments[i].department);
+                        }
+                        return array;
+                    },
+                    message: "Which department do you want to add this role?"
+                },
+            ]).then((data) => {
+
+                for (let i = 0; i < departments.length; i++) {
+                    if (departments[i].department === data.choice) {
+                        data.department_id = departments[i].id;
+                    }
+                }
+                const VALUES = [
+                    { title: data.updatedRole },
+                    { salary: data.updatedSalary },
+                    { department_id: data.department_id }
+                ]
+                let query1 = dbconnection.query('UPDATE roles SET title=?,salary= ? WHERE department_id= ?', VALUES, (err) => {
+                    if (err) throw err;
+                    console.table("You have successfully updated a Role...");
+                    promptUser()
+                });
+
+            })
+        })
     })
 }
 
