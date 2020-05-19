@@ -73,7 +73,7 @@ function promptUser() {
 function viewEmployees() {
     dbconnection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
-        console.log(res.length + ' Employees found!!!');
+        console.log(`${res.length} Employees found!!!`);
         console.table('All Employees:', res); 
         promptUser();
     })
@@ -82,7 +82,7 @@ function viewEmployees() {
 function viewAllDepartments() {
     dbconnection.query('SELECT * FROM department', (err, res) => {
         if (err) throw err;
-        console.log(res.length + ' Departments Found!!!');
+        console.log(`${res.length} Departments Found!!!`);
         console.table('All Departments:', res);
         promptUser();
     })
@@ -91,7 +91,7 @@ function viewAllDepartments() {
 function viewAllRoles() {
     dbconnection.query('SELECT * FROM roles', (err, res) => {
         if (err) throw err;
-        console.log(res.length + ' Roles Found!!!');
+        console.log(`${res.length} Roles Found!!!`);
         console.table('All Roles:', res);
         promptUser();
     })
