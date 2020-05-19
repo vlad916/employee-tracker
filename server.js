@@ -47,6 +47,11 @@ function promptUser() {
             case 'Add Department':
                 addDepartment();
                 break;
+            case 'QUIT TASK':
+                finish();
+                break;
+            default:
+                break;
         }
     })
 }
@@ -150,5 +155,8 @@ function addDepartment() {
         })
     })
 }
-    
+
+function finish(){
+    dbconnection.end();
+}
     
