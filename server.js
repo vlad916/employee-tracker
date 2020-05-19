@@ -38,6 +38,9 @@ function promptUser() {
             case 'View all Departments':
                 viewAllDepartments();
                 break;
+            case 'View all Roles':
+                viewAllRoles();
+                break;
         }
     })
 }
@@ -60,6 +63,14 @@ function viewAllDepartments() {
     })
 }
 
+function viewAllRoles() {
+    dbconnection.query('SELECT * FROM roles', (err, res) => {
+        if (err) throw err;
+        console.log(res.length + ' Roles Found!!!');
+        console.table('All Roles:', res);
+        promptUser();
+    })
+}
 
 
 
