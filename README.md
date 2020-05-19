@@ -10,7 +10,7 @@ This is a employee tracker application that allows the user to add and view depa
 
 ## Link for the Video (demo)
 
-* 
+* https://drive.google.com/open?id=1Ckmcv-S2SGA-Q5kMWXULps5TZBapSA9M
 
 ## Technologies used in building the application
 
