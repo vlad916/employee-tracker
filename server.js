@@ -138,9 +138,9 @@ function addEmployee() {
                     last_name: data.last_name,
                     role_id: roleId,
                 },
-                function (err) {
+                (err) => {
                     if (err) throw err;
-                    console.log('Employee added...');
+                    console.log('Employee successfully added...');
                     promptUser();
                 }
             )
@@ -215,7 +215,7 @@ function addRole() {
                     },
                     (err, res) => {
                         if (err) throw err;
-                        console.log('A new role has been added to the system...');
+                        console.log('A new role has been successfully added to the system...');
                         promptUser();
                     }
                 )
