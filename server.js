@@ -136,10 +136,17 @@ function addDepartment() {
             message: 'Enter a name for the new Department',
             name: 'department'
         }
-    ]).then(data => {
-        const query = `INSERT INTO department (department) VALUES ('${data.department}')`;
-        dbconnection.query(query, (err, res) => {
-            promptUser();
+    ]).then((data) => {
+            dbconnection.query( 
+                'INSERT INTO department SET ?',
+                {
+                    department: data.department
+                }
+        );
+            dbconnection.query('SELECT * FROM department', (err, res) => {
+            if (err) throw err;
+            console.table('All Departments:', res);
+            promptUser();        
         })
     })
 }
