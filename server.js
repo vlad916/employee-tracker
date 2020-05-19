@@ -44,6 +44,9 @@ function promptUser() {
             case 'Add an Employee':
                 addEmployee();
                 break;
+            case 'Add Department':
+                addDepartment();
+                break;
         }
     })
 }
@@ -126,6 +129,19 @@ function addEmployee() {
     })
 }
     
-    
+function addDepartment() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            message: 'Enter a name for the new Department',
+            name: 'department'
+        }
+    ]).then(data => {
+        const query = `INSERT INTO department (department) VALUES ('${data.department}')`;
+        dbconnection.query(query, (err, res) => {
+            promptUser();
+        })
+    })
+}
     
     
