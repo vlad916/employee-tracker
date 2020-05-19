@@ -21,6 +21,11 @@ This is a employee tracker application that allows the user to add and view depa
 * Console.Table module
 * Asciiart-logo module
 
+___
+
+<img src="assets/image.png">
+
+___
 ## Instructions on how to use the application
 
 * Clone the repository
