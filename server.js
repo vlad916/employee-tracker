@@ -41,6 +41,9 @@ function promptUser() {
             case 'View all Roles':
                 viewAllRoles();
                 break;
+            case 'Add an Employee':
+                addEmployee();
+                break;
         }
     })
 }
@@ -72,5 +75,57 @@ function viewAllRoles() {
     })
 }
 
-
-
+function addEmployee() {
+    dbconnection.query('SELECT * FROM roles', (err, res) => {
+        if (err) throw err;
+    
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: "Enter the Employee's first name",
+                name: 'first_name'
+            },
+            {
+                type: 'input',
+                message: "Enter the Employee's last name",
+                name: 'last_name'
+            },
+            {
+                type: 'list',
+                name: 'roles',
+                choices: function () {
+                    let arr = [];
+                    for (let i = 0; i < res.length; i++){
+                        arr.push(res[i].title);
+                    }
+                    return arr;
+                },
+                message: "What is the Employee's role"
+            }
+        ]).then ((data) => {
+            let roleId;
+            for (let j = 0; j < res.length; j++){
+                if (res[j].title == data.roles) {
+                    roleId = res[j].id;
+                    console.log(roleId)
+                }
+            }
+            dbconnection.query('INSERT INTO employee SET ?',
+                {
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    role_id: roleId,
+                },
+                function (err) {
+                    if (err) throw err;
+                    console.log('Employee added...');
+                    promptUser();
+                }
+            )
+        })
+    })
+}
+    
+    
+    
+    
